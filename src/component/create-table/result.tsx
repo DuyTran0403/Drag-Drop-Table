@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { TableCellProps, initTableCell } from './types';
-import { TableCustom, TdCustom, DivTable } from './styles';
+import { DivResult, DivRow, DivCell } from './styles';
 
 type Props = {
     dataTable: TableCellProps[][];
@@ -22,11 +22,11 @@ const ResultComponent: React.FC<Props> = ({
     }, []);
 
     const onDropTableCell = useCallback((item: TableCellProps) => {
-        const rowDrag = dragValue.rowNum - 1;
-        const colDrag = dragValue.colNum - 1;
+        const rowDrag = dragValue.rowNum;
+        const colDrag = dragValue.colNum;
         const valueDrag = dragValue.value;
-        const rowDrop = item.rowNum - 1;
-        const colDrop = item.colNum - 1;
+        const rowDrop = item.rowNum;
+        const colDrop = item.colNum;
         const valueDrop = item.value;
 
         const data = dataTable;
@@ -39,22 +39,31 @@ const ResultComponent: React.FC<Props> = ({
     }, [dataTable, dragValue, setDataTable, setDragValue]);
 
     return (
-        <DivTable>
-            <TableCustom>
-                <tbody>
-                    {dataTable.map((col, index) => (
-                        <tr key={index}>
-                            {col.map((row, indexb) => (
-                                <TdCustom key={indexb} id={row.id} draggable onDragStart={() => onDragTableCell(row)}
-                                    onDragOver={e => { onDragOver(e) }} onDrop={(e) => onDropTableCell(row)}>
-                                    {row.value}
-                                </TdCustom>
-                            ))}
-                        </tr>
-                    ))}
-                </tbody>
-            </TableCustom>
-        </DivTable>
+        <>
+            <br />
+            <br />
+            <DivResult>
+                {
+                    dataTable.map((row, i: number) => {
+                        return <DivRow key={`row_${i}`}>
+                            {row.map((cell, j: number) => {
+                                return (
+                                    <DivCell
+                                        key={`cell_${i}${j}`}
+                                        id={`${i}_${j}`}
+                                        draggable
+                                        onDragStart={() => onDragTableCell(cell)}
+                                        onDragOver={e => { onDragOver(e) }}
+                                        onDrop={(e) => onDropTableCell(cell)}
+                                    >
+                                        {cell.value}
+                                    </DivCell>
+                                );
+                            })}
+                        </DivRow>
+                    })}
+            </DivResult>
+        </>
     );
 }
 

@@ -5,8 +5,7 @@ export type FormikProps = {
 export type TableCellProps = {
     rowNum: number;
     colNum: number;
-    id: string;
-    value: string;
+    value: number;
 }
 
 export const initFormikValues: FormikProps = {
@@ -16,6 +15,5 @@ export const initFormikValues: FormikProps = {
 export const initTableCell: TableCellProps = {
     rowNum: 0,
     colNum: 0,
-    id: '',
-    value: '',
+    value: 0,
 }

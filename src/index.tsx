@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './component/create-table';
+import Page from './pages/create-table';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <Page />
     </React.StrictMode>,
     document.getElementById('root')
 );

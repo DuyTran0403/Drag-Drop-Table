@@ -10,15 +10,30 @@ const ConditionComponent: React.FC = () => {
         formikBag.submitForm();
     }, [formikBag]);
 
+
+    const onEnterEvent = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            formikBag.submitForm()
+        }
+    }, [formikBag]);
+
+    const onKeyDownEvent = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            formikBag.submitForm();
+        }
+    }, [formikBag]);
+
     return (
         <DivWrapper>
             <Title>DRAG - DROP TABLE</Title>
             <WrapItem>
-                N: <input
-                    type="text"
+                <input
                     name="nValue"
+                    onKeyUp={onEnterEvent}
+                    onKeyDown={onKeyDownEvent}
                     value={formikBag.values.nValue}
                     onChange={formikBag.handleChange}
+                    type="number"
                 />
                 {formikBag.errors.nValue && (
                     <PError>{formikBag.errors.nValue}</PError>

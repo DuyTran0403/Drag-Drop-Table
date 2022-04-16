@@ -6,37 +6,27 @@ import ConditionComponent from './condition';
 import ResultComponent from './result';
 
 const CreateTableComponent: React.FC = () => {
-    const [dataTable, setDataTable] = useState<TableCellProps[][]>();
+    const [dataTable, setDataTable] = useState<TableCellProps[][]>([]);
 
     const onSubmit = useCallback((values: FormikProps) => {
-        const data = [];
-        let diff = 0;
         const n = Number(values.nValue);
-        for (let row = 1; row <= n; row++) {
-            const rowData: TableCellProps[] = [];
-
-            for (let col = 1; col <= n; col++) {
+        const data = [...Array(n)].map((_, row: number) => {
+            return [...Array(n)].map((_, col: number) => {
                 if (col % 2 === 0) {
-                    rowData.push({
+                    return {
                         rowNum: row,
                         colNum: col,
-                        id: (col * n - diff).toString(),
-                        value: (col * n - diff).toString(),
-                    })
+                        value: col * n + row + 1,
+                    }
                 } else {
-                    rowData.push(
-                        {
-                            rowNum: row,
-                            colNum: col,
-                            id: ((col - 1) * n + 1 + diff).toString(),
-                            value: ((col - 1) * n + 1 + diff).toString(),
-                        }
-                    );
+                    return {
+                        rowNum: row,
+                        colNum: col,
+                        value: (col + 1) * n - row,
+                    }
                 }
-            }
-            diff++;
-            data.push(rowData);
-        }
+            }, []);
+        }, []);
         setDataTable(data);
     }, [setDataTable]);
 
